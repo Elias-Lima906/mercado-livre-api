@@ -34,7 +34,7 @@ public class User {
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime timestampSignUp = LocalDateTime.now();
 
-	public User(String email, String password) {
+	public User(@NotBlank @Email String email, @NotBlank String password) {
 		this.email = email;
 		this.password = this.encodePassword(password);
 	}
