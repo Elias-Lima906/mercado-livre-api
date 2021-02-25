@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 public class UserRequestDTO {
 
-	@NotBlank(message = "O campo email não pode estar em branco!")
+	@NotBlank(message = "O campo email não pode estar em branco ou vazio!")
 	@Email(message = "O campo email deve estar num formato aceitável, ex: exemplo@mail.com")
 	private String email;
 
