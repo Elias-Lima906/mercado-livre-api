@@ -20,12 +20,9 @@ public class UserController {
 	@PostMapping
 	@Transactional
 	public UserResponseDTO postMethodName(@RequestBody @Valid UserRequestDTO request) {
-
-		System.out.println(request.getPassword());
 		
 		@Valid
 		User user = request.toModel();
-		System.out.println(user.getPassword());
 		manager.persist(user);
 		return new UserResponseDTO(user);
 	}
