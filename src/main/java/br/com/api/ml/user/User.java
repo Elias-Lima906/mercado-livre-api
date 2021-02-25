@@ -1,6 +1,7 @@
 package br.com.api.ml.user;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,14 +29,14 @@ public class User {
 	@NotBlank
 	@Column(nullable = false)
 	private String password;
-	
+
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime timestampSignUp = LocalDateTime.now();
 
 	public User(String email, String password) {
 		this.email = email;
-		this.password = password;
+		this.password = this.encodePassword(password);
 	}
 
 	public Long getId() {
@@ -48,6 +49,18 @@ public class User {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public LocalDateTime getTimestampSignUp() {
+		return timestampSignUp;
+	}
+
+	private String encodePassword(String password) {
+		return Base64.getEncoder().encodeToString(password.getBytes());
+	}
+
+	private String decodePassword(String password) {
+		return new String (Base64.getDecoder().decode(password));
 	}
 
 }
