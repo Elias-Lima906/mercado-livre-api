@@ -4,6 +4,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import br.com.api.ml.validation.UniqueValue;
 
 
@@ -31,8 +33,8 @@ public class UserRequestDTO {
 		return password;
 	}
 
-	public User toModel() {
-		return new User(email, password);
+	public User toModel(PasswordEncoder passwordEncoder) {
+		return new User(email, passwordEncoder.encode(password));
 	}
 
 }
