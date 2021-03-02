@@ -1,7 +1,9 @@
 package br.com.api.ml.user;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +15,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User {
+public class User implements UserDetails {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +41,13 @@ public class User {
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime timestampSignUp = LocalDateTime.now();
 
+	@Deprecated
+	public User() {
+	}
+
 	public User(@NotBlank @Email String email, @NotBlank String password) {
 		this.email = email;
-		this.password = this.encodePassword(password);
+		this.password = password;
 	}
 
 	public Long getId() {
@@ -47,20 +58,47 @@ public class User {
 		return email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
 	public LocalDateTime getTimestampSignUp() {
 		return timestampSignUp;
 	}
 
-	private String encodePassword(String password) {
-		return Base64.getEncoder().encodeToString(password.getBytes());
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+	        authorities.add(new SimpleGrantedAuthority("USER"));
+
+	        return authorities;
 	}
 
-	private String decodePassword(String password) {
-		return new String (Base64.getDecoder().decode(password));
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.password;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
 }
