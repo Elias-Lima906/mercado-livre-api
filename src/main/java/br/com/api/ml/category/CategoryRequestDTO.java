@@ -42,7 +42,7 @@ public class CategoryRequestDTO {
 
 		motherCategory = Category.findMotherCategory(this.idMotherCategory, manager);
 		category.setCategory(motherCategory);
-		;
+		
 		return category;
 	}
 
