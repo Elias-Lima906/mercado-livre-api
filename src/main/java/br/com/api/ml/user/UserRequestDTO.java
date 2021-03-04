@@ -13,7 +13,7 @@ public class UserRequestDTO {
 
 	@NotBlank(message = "O campo email não pode estar em branco ou vazio!")
 	@Email(message = "O campo email deve estar num formato aceitável, ex: exemplo@mail.com")
-	@UniqueValue(domainName = User.class, fieldName = "email")
+	@UniqueValue(domainName = User.class, fieldName = "email", message = "Já existe um Úsuario cadastrado com o email!")
 	private String email;
 
 	@NotBlank(message = "O campo password não pode estar em branco!")
