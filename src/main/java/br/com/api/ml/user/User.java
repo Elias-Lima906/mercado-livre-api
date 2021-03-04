@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -64,11 +65,11 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-	        authorities.add(new SimpleGrantedAuthority("USER"));
+		authorities.add(new SimpleGrantedAuthority("USER"));
 
-	        return authorities;
+		return authorities;
 	}
 
 	@Override
@@ -99,6 +100,19 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", timestampSignUp=" + timestampSignUp
+				+ "]";
+	}
+
+	public static User findAuthenticatedUser(UserRepository userRepository) {
+
+		User usuarioLogado = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		return userRepository.findById(usuarioLogado.getId()).get();
 	}
 
 }
