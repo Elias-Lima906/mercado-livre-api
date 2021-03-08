@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
-import br.com.api.ml.category.Category;
-import br.com.api.ml.characteristc.Characteristic;
+import br.com.api.ml.category.CategoryResponseDTO;
+import br.com.api.ml.characteristc.CharacteristicResponseDTO;
+import br.com.api.ml.image.ImageResponseDTO;
 
 public class ProductResponseDTO {
 
@@ -15,8 +16,9 @@ public class ProductResponseDTO {
 	private Integer availableQuantity;
 	private String description;
 	private String timestampSignUp;
-	private Category category;
-	Set<Characteristic> characteristics;
+	private CategoryResponseDTO category;
+	Set<CharacteristicResponseDTO> characteristics;
+	Set<ImageResponseDTO> images;
 
 	@Deprecated
 	public ProductResponseDTO() {
@@ -28,8 +30,9 @@ public class ProductResponseDTO {
 		this.availableQuantity = product.getAvailableQuantity();
 		this.description = product.getDescription();
 		this.timestampSignUp = this.convertToString(product.getTimestampSignUp());
-		this.category = product.getCategory();
-		this.characteristics = product.getCharacteristics();
+		this.category = product.toCategoryDTO();
+		this.characteristics = product.toCharacteristicDTO();
+		this.images = product.toResponseDTO();
 	}
 
 	public String getName() {
@@ -52,12 +55,16 @@ public class ProductResponseDTO {
 		return timestampSignUp;
 	}
 
-	public Category getCategory() {
+	public CategoryResponseDTO getCategory() {
 		return category;
 	}
 
-	public Set<Characteristic> getCharacteristics() {
+	public Set<CharacteristicResponseDTO> getCharacteristics() {
 		return characteristics;
+	}
+
+	public Set<ImageResponseDTO> getImages() {
+		return images;
 	}
 
 	private String convertToString(LocalDateTime timestampSignUp) {
