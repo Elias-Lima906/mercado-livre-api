@@ -19,7 +19,7 @@ public class prohibitCharacteristicWithSameNameValidator implements Validator {
 
 		ProductRequestDTO request = (ProductRequestDTO) target;
 		if (request.hasEqualCharacteristics()) {
-			errors.rejectValue("characteristic", null, "Há mais de uma caracteristica com as mesmas informações!");
+			errors.rejectValue("characteristics", null, "Há mais de uma caracteristica com as mesmas informações!");
 		}
 	}
 
