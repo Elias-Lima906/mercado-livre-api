@@ -2,20 +2,19 @@ package br.com.api.ml.category;
 
 public class CategoryResponseDTO {
 
-	private String nome;
-
+	private String name;
 	private Category parentCategory;
 
 	public CategoryResponseDTO(Category category) {
-		this.nome = category.getName();
+		this.name = category.getName();
 		this.parentCategory = category.getCategory();
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public Category getIdCategory() {
+	public Category getParentCategory() {
 		return parentCategory;
 	}
 
