@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import org.springframework.util.Assert;
 
 import br.com.api.ml.category.Category;
-import br.com.api.ml.characteristc.CharacteristicDTO;
+import br.com.api.ml.characteristc.CharacteristicRequestDTO;
 import br.com.api.ml.user.User;
 import br.com.api.ml.user.UserRepository;
 import br.com.api.ml.validation.ExistsById;
@@ -41,7 +41,7 @@ public class ProductRequestDTO {
 	private Long idCategory;
 
 	@Size(min = 3)
-	List<CharacteristicDTO> characteristic;
+	List<CharacteristicRequestDTO> characteristics;
 
 	@Deprecated
 	public ProductRequestDTO() {
@@ -49,13 +49,13 @@ public class ProductRequestDTO {
 
 	public ProductRequestDTO(@NotBlank String name, @NotNull @Positive BigDecimal price,
 			@NotNull @Min(0) Integer availableQuantity, @NotBlank String description, @NotNull Long idCategory,
-			@Size(min = 3) List<CharacteristicDTO> characteristic) {
+			@Size(min = 3) List<CharacteristicRequestDTO> characteristic) {
 		this.name = name;
 		this.price = price;
 		this.availableQuantity = availableQuantity;
 		this.description = description;
 		this.idCategory = idCategory;
-		this.characteristic = characteristic;
+		this.characteristics = characteristic;
 	}
 
 	public String getName() {
@@ -78,8 +78,8 @@ public class ProductRequestDTO {
 		return idCategory;
 	}
 
-	public List<CharacteristicDTO> getCharacteristic() {
-		return characteristic;
+	public List<CharacteristicRequestDTO> getCharacteristics() {
+		return characteristics;
 	}
 
 	public Product toModel(EntityManager manager, UserRepository userRepository) {
@@ -88,14 +88,14 @@ public class ProductRequestDTO {
 		Assert.notNull(category, "Não foi encontado nenhuma categoria com o id: " + idCategory);
 
 		User user = User.findAuthenticatedUser(userRepository);
-		
-		return new Product(name, price, availableQuantity, description, category, user, characteristic);
+
+		return new Product(name, price, availableQuantity, description, category, user, characteristics);
 	}
 
 	public boolean hasEqualCharacteristics() {
 		HashSet<String> equalNames = new HashSet<String>();
 
-		for (CharacteristicDTO characteristic : characteristic) {
+		for (CharacteristicRequestDTO characteristic : characteristics) {
 			if (!equalNames.add(characteristic.getName())) {
 				return true;
 			}
