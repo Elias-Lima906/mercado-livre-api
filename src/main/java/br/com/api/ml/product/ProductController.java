@@ -25,7 +25,7 @@ public class ProductController {
 	@Autowired
 	UserRepository userRepository;
 
-	@InitBinder
+	@InitBinder(value = "ProductRequestDTO")
 	public void init(WebDataBinder webDataBinder) {
 		webDataBinder.addValidators(new prohibitCharacteristicWithSameNameValidator());
 	}
@@ -33,11 +33,10 @@ public class ProductController {
 	@PostMapping
 	@Transactional
 	public ProductResponseDTO saveProduct(@RequestBody @Valid ProductRequestDTO request) {
-
 		@Valid
 		Product product = request.toModel(manager, userRepository);
 		manager.persist(product);
 		return new ProductResponseDTO(product);
-	}
+	}	
 
 }
