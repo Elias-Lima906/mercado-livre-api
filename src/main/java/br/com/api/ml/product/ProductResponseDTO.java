@@ -3,11 +3,13 @@ package br.com.api.ml.product;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Set;
 
 import br.com.api.ml.category.CategoryResponseDTO;
 import br.com.api.ml.characteristc.CharacteristicResponseDTO;
 import br.com.api.ml.image.ImageResponseDTO;
+import br.com.api.ml.opinion.OpinionResponseDTO;
 
 public class ProductResponseDTO {
 
@@ -19,6 +21,7 @@ public class ProductResponseDTO {
 	private CategoryResponseDTO category;
 	Set<CharacteristicResponseDTO> characteristics;
 	Set<ImageResponseDTO> images;
+	List<OpinionResponseDTO> opinions;
 
 	@Deprecated
 	public ProductResponseDTO() {
@@ -32,7 +35,8 @@ public class ProductResponseDTO {
 		this.timestampSignUp = this.convertToString(product.getTimestampSignUp());
 		this.category = product.toCategoryDTO();
 		this.characteristics = product.toCharacteristicDTO();
-		this.images = product.toResponseDTO();
+		this.images = product.toImageResponseDTO();
+		this.opinions = product.toOpinionResponseDTO();
 	}
 
 	public String getName() {
@@ -67,13 +71,13 @@ public class ProductResponseDTO {
 		return images;
 	}
 
+	public List<OpinionResponseDTO> getOpinions() {
+		return opinions;
+	}
+
 	private String convertToString(LocalDateTime timestampSignUp) {
-
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-
-		String formatDateTime = timestampSignUp.format(formatter);
-
-		return formatDateTime;
+		return timestampSignUp.format(formatter);
 	}
 
 }
