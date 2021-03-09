@@ -2,8 +2,10 @@ package br.com.api.ml.product;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,8 @@ import br.com.api.ml.characteristc.CharacteristicRequestDTO;
 import br.com.api.ml.characteristc.CharacteristicResponseDTO;
 import br.com.api.ml.image.Image;
 import br.com.api.ml.image.ImageResponseDTO;
+import br.com.api.ml.opinion.Opinion;
+import br.com.api.ml.opinion.OpinionResponseDTO;
 import br.com.api.ml.user.User;
 import br.com.api.ml.user.UserRepository;
 
@@ -80,6 +84,9 @@ public class Product {
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
 	private Set<Image> images = new HashSet<Image>();
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+	List<Opinion> opinions = new ArrayList<Opinion>();
 
 	@Deprecated
 	public Product() {
@@ -164,8 +171,12 @@ public class Product {
 
 	}
 
-	public Set<ImageResponseDTO> toResponseDTO() {
+	public Set<ImageResponseDTO> toImageResponseDTO() {
 		return this.images.stream().map(image -> new ImageResponseDTO(image)).collect(Collectors.toSet());
+	}
+
+	public List<OpinionResponseDTO> toOpinionResponseDTO() {
+		return this.opinions.stream().map(opinion -> new OpinionResponseDTO(opinion)).collect(Collectors.toList());
 	}
 
 	public boolean userIsOwner(UserRepository userRepository) {
@@ -183,6 +194,10 @@ public class Product {
 		}
 
 		return product;
+	}
+
+	public void addOpinion(Opinion opinion) {
+		opinions.add(opinion);
 	}
 
 }
