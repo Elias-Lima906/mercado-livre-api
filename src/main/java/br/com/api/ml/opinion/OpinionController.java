@@ -32,7 +32,8 @@ public class OpinionController {
 		@Valid Product product = Product.findProduct(manager, id);
 		@Valid Opinion opinion = request.toModel(user, product);
 		
-		product.addOpinion(opinion);
+		product.addOpinionToProduct(opinion);
+		
 		return new ProductResponseDTO(product);
 	}
 
