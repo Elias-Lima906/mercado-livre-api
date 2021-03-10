@@ -2,6 +2,7 @@ package br.com.api.ml.opinion;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -49,7 +50,7 @@ public class OpinionRequestDTO {
 		return description;
 	}
 
-	public Opinion toModel(User user, Product product) {
+	public Opinion toModel(@NotNull @Valid User user, @NotNull @Valid Product product) {
 		return new Opinion(evaluation, title, description, user, product);
 	}
 
