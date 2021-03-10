@@ -225,4 +225,19 @@ public class Product {
 		questions.add(question);
 	}
 
+	public Double avarage() {
+
+		Double avarage = 0D;
+		double sum = 0;
+
+		for (Opinion opinion : opinions) {
+			sum = (sum + opinion.getEvaluation());
+		}
+		avarage = sum / opinions.size();
+		return avarage;
+	}
+
+	public Integer getNumberOfEvaluation() {
+		return opinions.size();
+	}
 }
