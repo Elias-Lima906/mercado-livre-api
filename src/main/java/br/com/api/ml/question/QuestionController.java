@@ -2,6 +2,7 @@ package br.com.api.ml.question;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,16 @@ public class QuestionController {
 	private Mailer mailer;
 
 	@PostMapping("/{id}")
+	@Transactional
 	public ProductResponseDTO postMethodName(@PathVariable Long id, @RequestBody @Valid QuestionRequestDTO request) {
 		@Valid User user = User.findAuthenticatedUser(userRepository);
 		@Valid Product product = Product.findProduct(manager, id);
 		Question question = request.toModel(user, product);
 
 		product.addQuestionToProduct(question);
+		manager.merge(product);
 
 		mailer.sendQuestion(question, product, user);
-
 		return new ProductResponseDTO(product);
 	}
 
