@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -27,8 +28,7 @@ public class Opinion {
 	@NotNull
 	@Min(1)
 	@Max(5)
-	@Size(max = 1)
-	@Column(nullable = false, length = 1)
+	@Column(nullable = false)
 	private Integer evaluation;
 
 	@NotNull
@@ -42,18 +42,20 @@ public class Opinion {
 
 	@NotNull
 	@ManyToOne
+	@Valid
 	private User user;
 
 	@NotNull
 	@ManyToOne
+	@Valid
 	private Product product;
 
 	@Deprecated
 	public Opinion() {
 	}
 
-	public Opinion(@NotNull @Min(1) @Max(5) @Size(max = 1) Integer evaluation, @NotNull Title title,
-			@NotBlank @Size(max = 500) String description, @NotNull User user, @NotNull Product product) {
+	public Opinion(@NotNull @Min(1) @Max(5) Integer evaluation, @NotNull Title title,
+			@NotBlank @Size(max = 500) String description, @NotNull @Valid User user, @NotNull @Valid Product product) {
 		this.evaluation = evaluation;
 		this.title = title;
 		this.description = description;
