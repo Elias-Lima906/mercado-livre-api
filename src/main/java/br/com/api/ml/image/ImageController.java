@@ -19,7 +19,7 @@ import br.com.api.ml.user.UserRepository;
 
 @RestController
 @RequestMapping("productImages")
-public class ProductImagesController {
+public class ImageController {
 
 	@PersistenceContext
 	private EntityManager manager;
