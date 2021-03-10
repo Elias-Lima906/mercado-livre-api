@@ -14,6 +14,7 @@ import br.com.api.ml.question.QuestionResponseDTO;
 
 public class ProductResponseDTO {
 
+	private Long id;
 	private String name;
 	private BigDecimal price;
 	private Integer availableQuantity;
@@ -30,6 +31,7 @@ public class ProductResponseDTO {
 	}
 
 	public ProductResponseDTO(Product product) {
+		this.id = product.getId();
 		this.name = product.getName();
 		this.price = product.getPrice();
 		this.availableQuantity = product.getAvailableQuantity();
@@ -40,6 +42,10 @@ public class ProductResponseDTO {
 		this.images = product.toImageResponseDTO();
 		this.opinions = product.toOpinionResponseDTO();
 		this.questions = product.toQuestionResponseDTO();
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getName() {
