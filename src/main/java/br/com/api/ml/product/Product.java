@@ -40,6 +40,8 @@ import br.com.api.ml.image.Image;
 import br.com.api.ml.image.ImageResponseDTO;
 import br.com.api.ml.opinion.Opinion;
 import br.com.api.ml.opinion.OpinionResponseDTO;
+import br.com.api.ml.question.Question;
+import br.com.api.ml.question.QuestionResponseDTO;
 import br.com.api.ml.user.User;
 import br.com.api.ml.user.UserRepository;
 
@@ -88,6 +90,9 @@ public class Product {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
 	List<Opinion> opinions = new ArrayList<Opinion>();
 
+	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+	List<Question> questions = new ArrayList<Question>();
+
 	@Deprecated
 	public Product() {
 	}
@@ -130,6 +135,18 @@ public class Product {
 
 	public Category getCategory() {
 		return category;
+	}
+
+	public String getUserEmail() {
+		return user.getEmail();
+	}
+
+	public List<Opinion> getOpinions() {
+		return opinions;
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
 	}
 
 	public Set<Characteristic> getCharacteristics() {
@@ -179,6 +196,10 @@ public class Product {
 		return this.opinions.stream().map(opinion -> new OpinionResponseDTO(opinion)).collect(Collectors.toList());
 	}
 
+	public List<QuestionResponseDTO> toQuestionResponseDTO() {
+		return this.questions.stream().map(question -> new QuestionResponseDTO(question)).collect(Collectors.toList());
+	}
+
 	public boolean userIsOwner(UserRepository userRepository) {
 		User user = User.findAuthenticatedUser(userRepository);
 		return this.user.equals(user);
@@ -196,8 +217,12 @@ public class Product {
 		return product;
 	}
 
-	public void addOpinion(Opinion opinion) {
+	public void addOpinionToProduct(Opinion opinion) {
 		opinions.add(opinion);
+	}
+
+	public void addQuestionToProduct(Question question) {
+		questions.add(question);
 	}
 
 }
