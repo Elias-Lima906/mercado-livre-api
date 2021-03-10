@@ -10,6 +10,7 @@ import br.com.api.ml.category.CategoryResponseDTO;
 import br.com.api.ml.characteristc.CharacteristicResponseDTO;
 import br.com.api.ml.image.ImageResponseDTO;
 import br.com.api.ml.opinion.OpinionResponseDTO;
+import br.com.api.ml.question.QuestionResponseDTO;
 
 public class ProductResponseDTO {
 
@@ -22,6 +23,7 @@ public class ProductResponseDTO {
 	Set<CharacteristicResponseDTO> characteristics;
 	Set<ImageResponseDTO> images;
 	List<OpinionResponseDTO> opinions;
+	List<QuestionResponseDTO> questions;
 
 	@Deprecated
 	public ProductResponseDTO() {
@@ -37,6 +39,7 @@ public class ProductResponseDTO {
 		this.characteristics = product.toCharacteristicDTO();
 		this.images = product.toImageResponseDTO();
 		this.opinions = product.toOpinionResponseDTO();
+		this.questions = product.toQuestionResponseDTO();
 	}
 
 	public String getName() {
@@ -73,6 +76,10 @@ public class ProductResponseDTO {
 
 	public List<OpinionResponseDTO> getOpinions() {
 		return opinions;
+	}
+
+	public List<QuestionResponseDTO> getQuestions() {
+		return questions;
 	}
 
 	private String convertToString(LocalDateTime timestampSignUp) {
