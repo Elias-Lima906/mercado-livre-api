@@ -2,10 +2,8 @@ package br.com.api.ml.product;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,18 +32,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import br.com.api.ml.category.Category;
 import br.com.api.ml.characteristc.Characteristic;
 import br.com.api.ml.characteristc.CharacteristicRequestDTO;
-import br.com.api.ml.characteristc.CharacteristicResponseDTO;
 import br.com.api.ml.image.Image;
-import br.com.api.ml.image.ImageResponseDTO;
 import br.com.api.ml.opinion.Opinion;
-import br.com.api.ml.opinion.OpinionResponseDTO;
 import br.com.api.ml.question.Question;
-import br.com.api.ml.question.QuestionResponseDTO;
 import br.com.api.ml.user.User;
 import br.com.api.ml.user.UserRepository;
 
 @Entity
 public class Product {
+
+	private static final int MINIMUN_AMOUNT_TO_CALCULATE_AVARAGE = 1;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,10 +83,10 @@ public class Product {
 	private Set<Image> images = new HashSet<Image>();
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
-	List<Opinion> opinions = new ArrayList<Opinion>();
+	Set<Opinion> opinions = new HashSet<Opinion>();
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
-	List<Question> questions = new ArrayList<Question>();
+	Set<Question> questions = new HashSet<Question>();
 
 	@Deprecated
 	public Product() {
@@ -140,11 +136,11 @@ public class Product {
 		return user.getEmail();
 	}
 
-	public List<Opinion> getOpinions() {
+	public Set<Opinion> getOpinions() {
 		return opinions;
 	}
 
-	public List<Question> getQuestions() {
+	public Set<Question> getQuestions() {
 		return questions;
 	}
 
@@ -161,41 +157,25 @@ public class Product {
 				.collect(Collectors.toSet());
 	}
 
-	public void saveImages(Set<String> links) {
-
+	public void addImages(Set<String> links) {
 		for (String link : links) {
 			Image image = new Image(this, link);
-			if (images.contains(image)) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-						"Já existe uma imagem com as mesmas informações associada a este úsuario!");
-			}
-
+			image.checkIfHasEqualImages(this.images, link);
 			images.add(image);
 		}
 	}
 
-	public Set<CharacteristicResponseDTO> toCharacteristicDTO() {
-
-		return this.characteristics.stream()
-				.map(characteristic -> new CharacteristicResponseDTO(characteristic.getName(),
-						characteristic.getDescription()))
-				.collect(Collectors.toSet());
-
+	public void addOpinionToProduct(Opinion opinion) {
+		opinion.checkIfHasEqualOpinions(this.opinions);
+		opinions.add(opinion);
 	}
 
-	public Set<ImageResponseDTO> toImageResponseDTO() {
-		return this.images.stream().map(image -> new ImageResponseDTO(image)).collect(Collectors.toSet());
+	public void addQuestionToProduct(Question question) {
+		question.checkIfHasEqualQuestions(this.questions);
+		questions.add(question);
 	}
 
-	public List<OpinionResponseDTO> toOpinionResponseDTO() {
-		return this.opinions.stream().map(opinion -> new OpinionResponseDTO(opinion)).collect(Collectors.toList());
-	}
-
-	public List<QuestionResponseDTO> toQuestionResponseDTO() {
-		return this.questions.stream().map(question -> new QuestionResponseDTO(question)).collect(Collectors.toList());
-	}
-
-	public boolean userIsOwner(UserRepository userRepository) {
+	public boolean userIsProductOwner(UserRepository userRepository) {
 		User user = User.findAuthenticatedUser(userRepository);
 		return this.user.equals(user);
 	}
@@ -212,15 +192,14 @@ public class Product {
 		return product;
 	}
 
-	public void addOpinionToProduct(Opinion opinion) {
-		opinions.add(opinion);
+	public Integer getNumberOfEvaluation() {
+		return opinions.size();
 	}
 
-	public void addQuestionToProduct(Question question) {
-		questions.add(question);
-	}
-
-	public Double avarage() {
+	public Double calculateAvarage() {
+		if (opinions.size() < MINIMUN_AMOUNT_TO_CALCULATE_AVARAGE) {
+			return null;
+		}
 
 		Double avarage = 0D;
 		double sum = 0;
@@ -232,7 +211,41 @@ public class Product {
 		return avarage;
 	}
 
-	public Integer getNumberOfEvaluation() {
-		return opinions.size();
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
 }
