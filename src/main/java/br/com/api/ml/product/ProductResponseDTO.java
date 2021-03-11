@@ -3,14 +3,17 @@ package br.com.api.ml.product;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Set;
 
 import br.com.api.ml.category.Category;
 import br.com.api.ml.category.CategoryResponseDTO;
+import br.com.api.ml.characteristc.Characteristic;
 import br.com.api.ml.characteristc.CharacteristicResponseDTO;
+import br.com.api.ml.image.Image;
 import br.com.api.ml.image.ImageResponseDTO;
+import br.com.api.ml.opinion.Opinion;
 import br.com.api.ml.opinion.OpinionResponseDTO;
+import br.com.api.ml.question.Question;
 import br.com.api.ml.question.QuestionResponseDTO;
 
 public class ProductResponseDTO {
@@ -24,8 +27,8 @@ public class ProductResponseDTO {
 	private CategoryResponseDTO category;
 	Set<CharacteristicResponseDTO> characteristics;
 	Set<ImageResponseDTO> images;
-	List<OpinionResponseDTO> opinions;
-	List<QuestionResponseDTO> questions;
+	Set<OpinionResponseDTO> opinions;
+	Set<QuestionResponseDTO> questions;
 
 	@Deprecated
 	public ProductResponseDTO() {
@@ -39,10 +42,10 @@ public class ProductResponseDTO {
 		this.description = product.getDescription();
 		this.timestampSignUp = this.convertToString(product.getTimestampSignUp());
 		this.category = Category.toCategoryDTO(product.getCategory());
-		this.characteristics = product.toCharacteristicDTO();
-		this.images = product.toImageResponseDTO();
-		this.opinions = product.toOpinionResponseDTO();
-		this.questions = product.toQuestionResponseDTO();
+		this.characteristics = Characteristic.toCharacteristicDTO(product.getCharacteristics());
+		this.images = Image.toImageResponseDTO(product.getImages());
+		this.opinions = Opinion.toOpinionResponseDTO(product.getOpinions());
+		this.questions = Question.toQuestionResponseDTO(product.getQuestions());
 	}
 
 	public Long getId() {
@@ -81,11 +84,11 @@ public class ProductResponseDTO {
 		return images;
 	}
 
-	public List<OpinionResponseDTO> getOpinions() {
+	public Set<OpinionResponseDTO> getOpinions() {
 		return opinions;
 	}
 
-	public List<QuestionResponseDTO> getQuestions() {
+	public Set<QuestionResponseDTO> getQuestions() {
 		return questions;
 	}
 
