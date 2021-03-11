@@ -18,7 +18,7 @@ public class PageDetailsController {
 	private EntityManager manager;
 
 	@GetMapping("/{id}")
-	public ProductPageDetails getDetails(@PathVariable Long id) {
+	public ProductPageDetails getDetailsPage(@PathVariable Long id) {
 		Product product = Product.findProduct(manager, id);
 		return new ProductPageDetails(product);
 	}
