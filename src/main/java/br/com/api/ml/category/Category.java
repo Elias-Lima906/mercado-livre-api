@@ -45,6 +45,10 @@ public class Category {
 		this.category = category;
 	}
 
+	public static CategoryResponseDTO toCategoryDTO(Category category) {
+		return new CategoryResponseDTO(category);
+	}
+
 	public static Category findMotherCategory(Long idMotherCategory, EntityManager manager) throws GlobalException {
 
 		Category motherCategory = manager.find(Category.class, idMotherCategory);
