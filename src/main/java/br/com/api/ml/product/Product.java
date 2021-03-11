@@ -32,7 +32,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.api.ml.category.Category;
-import br.com.api.ml.category.CategoryResponseDTO;
 import br.com.api.ml.characteristc.Characteristic;
 import br.com.api.ml.characteristc.CharacteristicRequestDTO;
 import br.com.api.ml.characteristc.CharacteristicResponseDTO;
@@ -77,12 +76,12 @@ public class Product {
 	@ManyToOne
 	private Category category;
 
+	@ManyToOne
+	private User user;
+
 	@JsonManagedReference
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
 	Set<Characteristic> characteristics = new HashSet<Characteristic>();
-
-	@ManyToOne
-	private User user;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
 	private Set<Image> images = new HashSet<Image>();
@@ -173,10 +172,6 @@ public class Product {
 
 			images.add(image);
 		}
-	}
-
-	public CategoryResponseDTO toCategoryDTO() {
-		return new CategoryResponseDTO(this.category);
 	}
 
 	public Set<CharacteristicResponseDTO> toCharacteristicDTO() {
