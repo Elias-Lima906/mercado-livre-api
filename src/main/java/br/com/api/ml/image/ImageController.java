@@ -33,8 +33,8 @@ public class ImageController {
 	@PostMapping(path = "/{id}")
 	@Transactional
 	public ProductResponseDTO addImages(@Valid ImageRequestDTO request, @PathVariable Long id) {
-		Product product = Product.findProduct(manager, id);
-		product.saveImages(localUploader.getImageLinks(request.getImages()));
+		@Valid Product product = Product.findProduct(manager, id);
+		product.addImages(localUploader.getImageLinks(request.getImages()));
 
 		verifyIfUserIsProductOwner(product);
 
@@ -43,7 +43,7 @@ public class ImageController {
 	}
 
 	private void verifyIfUserIsProductOwner(Product product) {
-		if (!product.userIsOwner(userRepository)) {
+		if (!product.userIsProductOwner(userRepository)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN,
 					"Você está tentando adicionar imagens a um produto que não pertence a sua conta!");
 		}
