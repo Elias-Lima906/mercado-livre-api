@@ -1,13 +1,16 @@
 package br.com.api.ml.page_details;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
+import br.com.api.ml.characteristc.Characteristic;
 import br.com.api.ml.characteristc.CharacteristicResponseDTO;
+import br.com.api.ml.image.Image;
 import br.com.api.ml.image.ImageResponseDTO;
+import br.com.api.ml.opinion.Opinion;
 import br.com.api.ml.opinion.OpinionResponseDTO;
 import br.com.api.ml.product.Product;
+import br.com.api.ml.question.Question;
 import br.com.api.ml.question.QuestionResponseDTO;
 
 public class ProductPageDetails {
@@ -20,8 +23,8 @@ public class ProductPageDetails {
 	private Integer numberOfEvaluation;
 	Set<CharacteristicResponseDTO> characteristics;
 	Set<ImageResponseDTO> images;
-	List<OpinionResponseDTO> opinions;
-	List<QuestionResponseDTO> questions;
+	Set<OpinionResponseDTO> opinions;
+	Set<QuestionResponseDTO> questions;
 
 	@Deprecated
 	public ProductPageDetails() {
@@ -32,12 +35,12 @@ public class ProductPageDetails {
 		this.price = product.getPrice();
 		this.availableQuantity = product.getAvailableQuantity();
 		this.description = product.getDescription();
-		this.avarage = product.avarage();
+		this.avarage = product.calculateAvarage();
 		this.numberOfEvaluation = product.getNumberOfEvaluation();
-		this.characteristics = product.toCharacteristicDTO();
-		this.images = product.toImageResponseDTO();
-		this.opinions = product.toOpinionResponseDTO();
-		this.questions = product.toQuestionResponseDTO();
+		this.characteristics = Characteristic.toCharacteristicDTO(product.getCharacteristics());
+		this.images = Image.toImageResponseDTO(product.getImages());
+		this.opinions = Opinion.toOpinionResponseDTO(product.getOpinions());
+		this.questions = Question.toQuestionResponseDTO(product.getQuestions());
 	}
 
 	public Double getAvarage() {
@@ -72,11 +75,11 @@ public class ProductPageDetails {
 		return images;
 	}
 
-	public List<OpinionResponseDTO> getOpinions() {
+	public Set<OpinionResponseDTO> getOpinions() {
 		return opinions;
 	}
 
-	public List<QuestionResponseDTO> getQuestions() {
+	public Set<QuestionResponseDTO> getQuestions() {
 		return questions;
 	}
 
