@@ -1,5 +1,8 @@
 package br.com.api.ml.characteristc;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +43,8 @@ public class Characteristic {
 	public Characteristic() {
 	}
 
-	public Characteristic(@NotBlank String name, @NotBlank String description, @NotNull @Valid Product product) {
+	public Characteristic(@NotBlank String name, @NotBlank @Size(max = 1000) String description,
+			@NotNull @Valid Product product) {
 		this.name = name;
 		this.description = description;
 		this.product = product;
@@ -60,6 +64,11 @@ public class Characteristic {
 
 	public Product getProduct() {
 		return product;
+	}
+
+	public static Set<CharacteristicResponseDTO> toCharacteristicDTO(Set<Characteristic> characteristics) {
+		return characteristics.stream().map(characteristic -> new CharacteristicResponseDTO(characteristic))
+				.collect(Collectors.toSet());
 	}
 
 }
