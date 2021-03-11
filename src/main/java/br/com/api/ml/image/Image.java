@@ -1,5 +1,8 @@
 package br.com.api.ml.image;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.URL;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.api.ml.product.Product;
 
@@ -48,6 +53,17 @@ public class Image {
 
 	public String getLink() {
 		return link;
+	}
+
+	public static Set<ImageResponseDTO> toImageResponseDTO(Set<Image> images) {
+		return images.stream().map(image -> new ImageResponseDTO(image)).collect(Collectors.toSet());
+	}
+
+	public void checkIfHasEqualImages(Set<Image> images, String link) {
+		if (images.contains(this)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma imagem adicionada pelo úsuario: "
+					+ this.getProduct().getUserEmail() + " a este produto, com o nome: " + link.substring(18) + ".");
+		}
 	}
 
 	@Override
