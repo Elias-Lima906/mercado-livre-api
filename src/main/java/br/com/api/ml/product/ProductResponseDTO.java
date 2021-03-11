@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
+import br.com.api.ml.category.Category;
 import br.com.api.ml.category.CategoryResponseDTO;
 import br.com.api.ml.characteristc.CharacteristicResponseDTO;
 import br.com.api.ml.image.ImageResponseDTO;
@@ -37,7 +38,7 @@ public class ProductResponseDTO {
 		this.availableQuantity = product.getAvailableQuantity();
 		this.description = product.getDescription();
 		this.timestampSignUp = this.convertToString(product.getTimestampSignUp());
-		this.category = product.toCategoryDTO();
+		this.category = Category.toCategoryDTO(product.getCategory());
 		this.characteristics = product.toCharacteristicDTO();
 		this.images = product.toImageResponseDTO();
 		this.opinions = product.toOpinionResponseDTO();
