@@ -30,13 +30,13 @@ import org.springframework.web.server.ResponseStatusException;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.api.ml.category.Category;
-import br.com.api.ml.characteristc.Characteristic;
-import br.com.api.ml.characteristc.CharacteristicRequestDTO;
-import br.com.api.ml.image.Image;
-import br.com.api.ml.opinion.Opinion;
-import br.com.api.ml.question.Question;
+import br.com.api.ml.product.characteristc.Characteristic;
+import br.com.api.ml.product.characteristc.CharacteristicRequestDTO;
+import br.com.api.ml.product.image.Image;
+import br.com.api.ml.product.opinion.Opinion;
+import br.com.api.ml.product.question.Question;
 import br.com.api.ml.user.User;
-import br.com.api.ml.user.UserRepository;
+import br.com.api.ml.user.UsuarioRepository;
 
 @Entity
 public class Product {
@@ -73,7 +73,7 @@ public class Product {
 	private Category category;
 
 	@ManyToOne
-	private User user;
+	private User owner;
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
@@ -94,13 +94,13 @@ public class Product {
 
 	public Product(@NotBlank String name, @NotNull @Positive BigDecimal price,
 			@NotNull @Min(0) Integer availableQuantity, @NotBlank String description, @NotNull Category category,
-			@NotNull @Valid User user, @Size(min = 3) Collection<CharacteristicRequestDTO> characteristics) {
+			@NotNull @Valid User owner, @Size(min = 3) Collection<CharacteristicRequestDTO> characteristics) {
 		this.name = name;
 		this.price = price;
 		this.availableQuantity = availableQuantity;
 		this.description = description;
 		this.category = category;
-		this.user = user;
+		this.owner = owner;
 		this.characteristics.addAll(addCharacteristics(characteristics));
 	}
 
@@ -132,8 +132,8 @@ public class Product {
 		return category;
 	}
 
-	public String getUserEmail() {
-		return user.getEmail();
+	public String getOwnerEmail() {
+		return owner.getEmail();
 	}
 
 	public Set<Opinion> getOpinions() {
@@ -175,9 +175,9 @@ public class Product {
 		questions.add(question);
 	}
 
-	public boolean userIsProductOwner(UserRepository userRepository) {
-		User user = User.findAuthenticatedUser(userRepository);
-		return this.user.equals(user);
+	public boolean userIsProductOwner(UsuarioRepository userRepository) {
+		User loggedUser = User.findAuthenticatedUser(userRepository);
+		return this.owner.equals(loggedUser);
 	}
 
 	public static Product findProduct(EntityManager manager, Long id) {
@@ -217,7 +217,7 @@ public class Product {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
 		return result;
 	}
 
@@ -240,10 +240,10 @@ public class Product {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (owner == null) {
+			if (other.owner != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!owner.equals(other.owner))
 			return false;
 		return true;
 	}

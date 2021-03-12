@@ -1,4 +1,4 @@
-package br.com.api.ml.image;
+package br.com.api.ml.product.image;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,7 +62,7 @@ public class Image {
 	public void checkIfHasEqualImages(Set<Image> images, String link) {
 		if (images.contains(this)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma imagem adicionada pelo úsuario: "
-					+ this.getProduct().getUserEmail() + " a este produto, com o nome: " + link.substring(18) + ".");
+					+ this.getProduct().getOwnerEmail() + " a este produto, com o nome: " + link.substring(18) + ".");
 		}
 	}
 

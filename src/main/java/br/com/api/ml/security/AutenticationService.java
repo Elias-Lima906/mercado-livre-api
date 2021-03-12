@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.api.ml.user.User;
-import br.com.api.ml.user.UserRepository;
+import br.com.api.ml.user.UsuarioRepository;
 
 @Service
 public class AutenticationService implements UserDetailsService {
@@ -17,7 +17,7 @@ public class AutenticationService implements UserDetailsService {
 	private static final String USUARIO_INVALIDO = "Usuário inválido!";
 
 	@Autowired
-	UserRepository userRepository;
+	UsuarioRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

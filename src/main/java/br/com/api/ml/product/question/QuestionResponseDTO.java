@@ -1,4 +1,4 @@
-package br.com.api.ml.question;
+package br.com.api.ml.product.question;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

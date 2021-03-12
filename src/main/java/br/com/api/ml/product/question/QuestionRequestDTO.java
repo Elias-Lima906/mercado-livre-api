@@ -1,4 +1,4 @@
-package br.com.api.ml.question;
+package br.com.api.ml.product.question;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

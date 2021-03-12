@@ -20,7 +20,7 @@ public class UserController {
 	private EntityManager manager;
 	
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	@PostMapping
 	@Transactional

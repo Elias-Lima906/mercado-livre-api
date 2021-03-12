@@ -30,8 +30,6 @@ public class AuthController {
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
 		
-		System.out.println(login.getEmail() + "   " + login.getPassword());
-
 		try {
 			Authentication authentication = authManager.authenticate(authenticationToken);
 			String token = tokenService.gerarToken(authentication);

@@ -1,4 +1,4 @@
-package br.com.api.ml.question;
+package br.com.api.ml.product.opinion;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,32 +15,29 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.ml.product.Product;
 import br.com.api.ml.product.ProductResponseDTO;
 import br.com.api.ml.user.User;
-import br.com.api.ml.user.UserRepository;
+import br.com.api.ml.user.UsuarioRepository;
 
 @RestController
-@RequestMapping("/productQuestions")
-public class QuestionController {
+@RequestMapping("/productOpinions")
+public class OpinionController {
 
 	@PersistenceContext
 	private EntityManager manager;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private Mailer mailer;
+	private UsuarioRepository userRepository;
 
 	@PostMapping("/{id}")
 	@Transactional
-	public ProductResponseDTO postMethodName(@PathVariable Long id, @RequestBody @Valid QuestionRequestDTO request) {
+	public ProductResponseDTO addOpinions(@PathVariable Long id, @RequestBody @Valid OpinionRequestDTO request) {
 		@Valid User user = User.findAuthenticatedUser(userRepository);
 		@Valid Product product = Product.findProduct(manager, id);
-		Question question = request.toModel(user, product);
-
-		product.addQuestionToProduct(question);
+		@Valid Opinion opinion = request.toModel(user, product);
+		
+		product.addOpinionToProduct(opinion);
+		
 		manager.merge(product);
-
-		mailer.sendQuestion(question, product, user);
+		
 		return new ProductResponseDTO(product);
 	}
 

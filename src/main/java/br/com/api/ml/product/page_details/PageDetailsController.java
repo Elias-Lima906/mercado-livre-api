@@ -1,4 +1,4 @@
-package br.com.api.ml.page_details;
+package br.com.api.ml.product.page_details;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

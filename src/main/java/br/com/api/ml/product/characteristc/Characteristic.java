@@ -1,4 +1,4 @@
-package br.com.api.ml.characteristc;
+package br.com.api.ml.product.characteristc;
 
 import java.util.Set;
 import java.util.stream.Collectors;

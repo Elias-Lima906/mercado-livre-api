@@ -1,4 +1,4 @@
-package br.com.api.ml.opinion;
+package br.com.api.ml.product.opinion;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.ml.user.UserRepository;
+import br.com.api.ml.user.UsuarioRepository;
 
 @RestController
 @RequestMapping("/products")
@@ -23,7 +23,7 @@ public class ProductController {
 	EntityManager manager;
 
 	@Autowired
-	UserRepository userRepository;
+	UsuarioRepository userRepository;
 
 	@InitBinder(value = "ProductRequestDTO")
 	public void init(WebDataBinder webDataBinder) {

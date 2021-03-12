@@ -1,17 +1,17 @@
-package br.com.api.ml.page_details;
+package br.com.api.ml.product.page_details;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
-import br.com.api.ml.characteristc.Characteristic;
-import br.com.api.ml.characteristc.CharacteristicResponseDTO;
-import br.com.api.ml.image.Image;
-import br.com.api.ml.image.ImageResponseDTO;
-import br.com.api.ml.opinion.Opinion;
-import br.com.api.ml.opinion.OpinionResponseDTO;
 import br.com.api.ml.product.Product;
-import br.com.api.ml.question.Question;
-import br.com.api.ml.question.QuestionResponseDTO;
+import br.com.api.ml.product.characteristc.Characteristic;
+import br.com.api.ml.product.characteristc.CharacteristicResponseDTO;
+import br.com.api.ml.product.image.Image;
+import br.com.api.ml.product.image.ImageResponseDTO;
+import br.com.api.ml.product.opinion.Opinion;
+import br.com.api.ml.product.opinion.OpinionResponseDTO;
+import br.com.api.ml.product.question.Question;
+import br.com.api.ml.product.question.QuestionResponseDTO;
 
 public class ProductPageDetails {
 

@@ -1,4 +1,4 @@
-package br.com.api.ml.image;
+package br.com.api.ml.product.image;
 
 public class ImageResponseDTO {
 

@@ -1,4 +1,4 @@
-package br.com.api.ml.characteristc;
+package br.com.api.ml.product.characteristc;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

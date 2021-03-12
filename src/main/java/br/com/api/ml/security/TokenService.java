@@ -27,12 +27,11 @@ public class TokenService {
 		Date expirationDate = new Date(date.getTime() + Long.parseLong(expiration));
 
 		return Jwts.builder()
-				.setIssuer("API do Fórum da Alura")
+				.setIssuer("Mercado-Livre")
 				.setSubject(loggedUser.getId().toString())
 				.setIssuedAt(date)
 				.setExpiration(expirationDate)
 				.signWith(SignatureAlgorithm.HS256, secret).compact();
-
 	}
 
 	public boolean isTokenValid(String token) {

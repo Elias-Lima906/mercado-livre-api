@@ -1,4 +1,4 @@
-package br.com.api.ml.image;
+package br.com.api.ml.product.image;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.api.ml.product.Product;
 import br.com.api.ml.product.ProductResponseDTO;
-import br.com.api.ml.user.UserRepository;
+import br.com.api.ml.user.UsuarioRepository;
 
 @RestController
 @RequestMapping("productImages")
@@ -28,7 +28,7 @@ public class ImageController {
 	Uploader localUploader;
 
 	@Autowired
-	UserRepository userRepository;
+	UsuarioRepository userRepository;
 
 	@PostMapping(path = "/{id}")
 	@Transactional

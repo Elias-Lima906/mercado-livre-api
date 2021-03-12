@@ -1,4 +1,4 @@
-package br.com.api.ml.characteristc;
+package br.com.api.ml.product.characteristc;
 
 public class CharacteristicResponseDTO {
 
