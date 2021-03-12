@@ -12,19 +12,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.com.api.ml.user.User;
-import br.com.api.ml.user.UsuarioRepository;
+import br.com.api.ml.user.UserRepository;
 
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	private TokenService tokenService;
 
-	private UsuarioRepository userRepository;
+	private UserRepository userRepository;
 
 	public JwtRequestFilter() {
 
 	}
 
-	public JwtRequestFilter(TokenService tokenService, UsuarioRepository userRepository) {
+	public JwtRequestFilter(TokenService tokenService, UserRepository userRepository) {
 		this.tokenService = tokenService;
 		this.userRepository = userRepository;
 	}

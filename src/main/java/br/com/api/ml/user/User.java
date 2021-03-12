@@ -102,7 +102,7 @@ public class User implements UserDetails {
 		return true;
 	}
 
-	public static User findAuthenticatedUser(UsuarioRepository userRepository) {
+	public static User findAuthenticatedUser(UserRepository userRepository) {
 
 		User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.api.ml.user.UsuarioRepository;
+import br.com.api.ml.user.UserRepository;
 
 @EnableWebSecurity
 @Configuration
@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private TokenService tokenService;
 
 	@Autowired
-	private UsuarioRepository userRepository;
+	private UserRepository userRepository;
 
 	@Override
 	@Bean

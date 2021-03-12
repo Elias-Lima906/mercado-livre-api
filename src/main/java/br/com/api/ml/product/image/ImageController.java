@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.api.ml.product.Product;
 import br.com.api.ml.product.ProductResponseDTO;
-import br.com.api.ml.user.UsuarioRepository;
+import br.com.api.ml.user.UserRepository;
 
 @RestController
 @RequestMapping("productImages")
@@ -28,7 +28,7 @@ public class ImageController {
 	Uploader localUploader;
 
 	@Autowired
-	UsuarioRepository userRepository;
+	UserRepository userRepository;
 
 	@PostMapping(path = "/{id}")
 	@Transactional

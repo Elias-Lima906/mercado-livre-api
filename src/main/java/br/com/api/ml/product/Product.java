@@ -36,7 +36,7 @@ import br.com.api.ml.product.image.Image;
 import br.com.api.ml.product.opinion.Opinion;
 import br.com.api.ml.product.question.Question;
 import br.com.api.ml.user.User;
-import br.com.api.ml.user.UsuarioRepository;
+import br.com.api.ml.user.UserRepository;
 
 @Entity
 public class Product {
@@ -175,7 +175,7 @@ public class Product {
 		questions.add(question);
 	}
 
-	public boolean userIsProductOwner(UsuarioRepository userRepository) {
+	public boolean userIsProductOwner(UserRepository userRepository) {
 		User loggedUser = User.findAuthenticatedUser(userRepository);
 		return this.owner.equals(loggedUser);
 	}

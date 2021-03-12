@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.ml.product.Product;
 import br.com.api.ml.product.ProductResponseDTO;
 import br.com.api.ml.user.User;
-import br.com.api.ml.user.UsuarioRepository;
+import br.com.api.ml.user.UserRepository;
 
 @RestController
 @RequestMapping("/productOpinions")
@@ -25,7 +25,7 @@ public class OpinionController {
 	private EntityManager manager;
 
 	@Autowired
-	private UsuarioRepository userRepository;
+	private UserRepository userRepository;
 
 	@PostMapping("/{id}")
 	@Transactional

@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 import br.com.api.ml.category.Category;
 import br.com.api.ml.product.characteristc.CharacteristicRequestDTO;
 import br.com.api.ml.user.User;
-import br.com.api.ml.user.UsuarioRepository;
+import br.com.api.ml.user.UserRepository;
 import br.com.api.ml.validation.ExistsById;
 
 public class ProductRequestDTO {
@@ -82,7 +82,7 @@ public class ProductRequestDTO {
 		return characteristics;
 	}
 
-	public Product toModel(EntityManager manager, UsuarioRepository userRepository) {
+	public Product toModel(EntityManager manager, UserRepository userRepository) {
 
 		Category category = manager.find(Category.class, idCategory);
 		Assert.notNull(category, "Não foi encontado nenhuma categoria com o id: " + idCategory);
