@@ -5,22 +5,16 @@ import java.time.format.DateTimeFormatter;
 
 public class UserResponseDTO {
 
-	private Long id;
-	private String email;
+	private String message;
 	private String timestampSignUp;
 
-	public UserResponseDTO(User user) {
-		this.id = user.getId();
-		this.email = user.getEmail();
-		this.timestampSignUp = convertToString(user.getTimestampSignUp());
+	public UserResponseDTO(String message, LocalDateTime timestampSignUp) {
+		this.message = message;
+		this.timestampSignUp = convertToString(timestampSignUp);
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getEmail() {
-		return email;
+	public String getMessage() {
+		return message;
 	}
 
 	public String getTimestampSignUp() {

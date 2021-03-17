@@ -29,7 +29,7 @@ public class UserController {
 		@Valid
 		User user = request.toModel(passwordEncoder);
 		manager.persist(user);
-		return new UserResponseDTO(user);
+		return new UserResponseDTO("Úsuario cadastrado com sucesso!", user.getTimestampSignUp());
 	}
 
 }
