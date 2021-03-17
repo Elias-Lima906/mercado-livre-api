@@ -47,10 +47,6 @@ public class Image {
 		return id;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
 	public String getLink() {
 		return link;
 	}
@@ -62,7 +58,7 @@ public class Image {
 	public void checkIfHasEqualImages(Set<Image> images, String link) {
 		if (images.contains(this)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma imagem adicionada pelo úsuario: "
-					+ this.getProduct().getOwnerEmail() + " a este produto, com o nome: " + link.substring(18) + ".");
+					+ this.product.getOwnerEmail() + " a este produto, com o nome: " + link.substring(18) + ".");
 		}
 	}
 

@@ -91,11 +91,7 @@ public class Opinion {
 	public String getUserEmail() {
 		return user.getEmail();
 	}
-
-	public Product getProduct() {
-		return product;
-	}
-
+	
 	public static Set<OpinionResponseDTO> toOpinionResponseDTO(Set<Opinion> opinions) {
 		return opinions.stream().map(opinion -> new OpinionResponseDTO(opinion)).collect(Collectors.toSet());
 	}

@@ -64,10 +64,6 @@ public class Question {
 		return timestampCreation;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
 	public String getUserEmail() {
 		return user.getEmail();
 	}
