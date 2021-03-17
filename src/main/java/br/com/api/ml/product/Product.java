@@ -136,6 +136,10 @@ public class Product {
 		return owner.getEmail();
 	}
 
+	public Long getOwnerId() {
+		return owner.getId();
+	}
+
 	public Set<Opinion> getOpinions() {
 		return opinions;
 	}
@@ -209,6 +213,15 @@ public class Product {
 		}
 		avarage = sum / opinions.size();
 		return avarage;
+	}
+
+	public boolean writeOffStock(Integer amount) {
+		if (amount <= this.availableQuantity) {
+			this.availableQuantity -= amount;
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
